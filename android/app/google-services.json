@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "302396788105",
+    "project_id": "gestec-42dff",
+    "storage_bucket": "gestec-42dff.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302396788105:android:855ee766f4747836c96558",
+        "android_client_info": {
+          "package_name": "com.example.gestec"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv8ePjeDGfzaO2IJGXPy2yYAz_YDP95pM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
