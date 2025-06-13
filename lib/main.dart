@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      title: 'CreativeLabs',
+      title: 'Gestec',
       routerConfig: router,
       theme: ThemeData(
         fontFamily: 'Montserrat',

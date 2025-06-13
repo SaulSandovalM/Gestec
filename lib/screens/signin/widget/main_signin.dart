@@ -1,6 +1,8 @@
-import 'package:gestec/core/constants/colors.dart';
+import 'package:gestec/core/widgets/button.dart';
 import 'package:gestec/core/widgets/container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gestec/core/widgets/feature_item.dart';
+import 'package:gestec/core/widgets/input.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
@@ -58,19 +60,6 @@ class MainSignInState extends State<MainSignIn> {
     );
   }
 
-  String? _validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Ingresa tu correo';
-    }
-    final RegExp emailRegex = RegExp(
-      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-    );
-    if (!emailRegex.hasMatch(value)) {
-      return 'Ingresa un correo electrónico válido';
-    }
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -79,113 +68,133 @@ class MainSignInState extends State<MainSignIn> {
     return MainContainer(
       child: SizedBox(
         height: availableHeight,
-        width: double.infinity,
+        width: 1200,
         child: Row(
           children: [
-            Expanded(
-              child: Container(
-                color: CustomColor.navBarBg,
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/escudo.png',
-                    height: 450,
-                  ),
+            const Expanded(
+              flex: 2,
+              child: Padding(
+                padding: EdgeInsets.all(32.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '🌐 Gestec',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 40),
+                    FeatureItem(
+                      icon: Icons.settings,
+                      title: 'Objetivo general',
+                      description:
+                          'Integrar información de manera periódica, a partir de informes históricos presentados en las Sesiones de los Órganos de Gobierno, para el análisis y evaluación constante, respetando la integridad de sus datos a través de distintos niveles de seguridad informática.',
+                    ),
+                    SizedBox(height: 20),
+                    FeatureItem(
+                      icon: Icons.build,
+                      title: 'Misión',
+                      description:
+                          'Facilitar el Control y Seguimiento de Entidades Paraestatales a través de la sistematización de procesos que permitan la evaluación constante de estas así como la generación de diagnósticos que permitan el cumplimiento del objeto su creación, manejado la información sustantiva generada a partir de sus Sesiones de Órgano de Gobierno e Información normativa.',
+                    ),
+                    SizedBox(height: 20),
+                    FeatureItem(
+                      icon: Icons.thumb_up_alt,
+                      title: 'Visión',
+                      description:
+                          'Ser un referente en la implementación de tecnologías enfocadas al e-gobierno que permita la dinamización de procedimientos en el análisis y evaluación de las Entidades Paraestatales manteniendo la integridad de la información y el almacenamiento histórico.',
+                    ),
+                  ],
                 ),
               ),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'INICIA SESIÓN',
-                        style: TextStyle(fontSize: 16),
+              flex: 1,
+              child: Center(
+                child: SizedBox(
+                  height: 600,
+                  child: Card(
+                    color: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        color: Colors.black54,
+                        width: 1,
                       ),
-                      const Text(
-                        'Bienvenido de nuevo',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const Text(
-                        'Registro y Monitoreo de Organismos.',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 40),
-                            TextFormField(
-                              controller: _emailController,
-                              decoration: const InputDecoration(
-                                labelText: 'Correo electrónico',
-                                border: OutlineInputBorder(),
+                      borderRadius: BorderRadius.circular(
+                          8), // Opcional: bordes redondeados
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(32.0),
+                      child: SingleChildScrollView(
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Bienvenido',
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
                               ),
-                              validator: _validateEmail,
-                            ),
-                            const SizedBox(height: 20),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'Olvidaste tu contraseña?',
+                              const SizedBox(height: 20),
+                              Input(
+                                controller: _emailController,
+                                label: 'Correo electrónico',
+                                keyboardType: TextInputType.emailAddress,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Ingresa tu correo';
+                                  }
+                                  if (!value.contains('@')) {
+                                    return 'Correo inválido';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 20),
+                              const Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  '¿Olvidaste tu contraseña?',
                                   style: TextStyle(
-                                    color: CustomColor.primaryColor,
+                                    color: Colors.black,
+                                    fontSize: 14,
                                   ),
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            TextFormField(
-                              controller: _passwordController,
-                              obscureText: true,
-                              decoration: const InputDecoration(
-                                labelText: 'Contraseña',
-                                border: OutlineInputBorder(),
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Ingresa tu contraseña';
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 40),
-                            Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            CustomColor.primaryColor,
-                                        foregroundColor: Colors.white,
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 40,
-                                          vertical: 15,
-                                        ),
-                                      ),
-                                      onPressed: _isLoading ? null : _signIn,
-                                      child: _isLoading
-                                          ? const CircularProgressIndicator(
-                                              color: Colors.white,
-                                            )
-                                          : const Text("Entrar"),
+                              const SizedBox(height: 6),
+                              Input(
+                                controller: _passwordController,
+                                label: 'Contraseña',
+                                obscureText: true,
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Button(
+                                      title: 'Entrar',
+                                      onPressed: _signIn,
+                                      isLoading: _isLoading,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 ),
               ),
